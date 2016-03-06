@@ -17,11 +17,16 @@
         <h2 align="center">AnyCo Corporation: HR Application</h2>
         
         <h3 align="left">Insert Employee Record</h3>
+        <jsp:useBean id="empsbean" scope="session" class="hr.DataHandler" /> 
         
-      
-         <form action="insert_action.jsp">
+          <form action="insert_action.jsp">
+        <input type="radio" name="useSP" value="false" checked="checked" />
+        Use only JDBC to insert a new record <p/>
+        <input type="radio" name="useSP" value="true" />
+        Use stored procedure called via JDBC to insert a record
+             
              <table border="1">
-      <%--            <thead>
+                     <%--            <thead>
                      <tr>
                          <th></th>
                          <th></th>
@@ -53,9 +58,9 @@
                                  <option value ="PR_REP">PR Representative</option>
                                  <option value ="MK_MAN">Marketing Manager</option>
                                  <option value ="SA_MAN" >Sales Manager</option>
-                                 <option value ="FI_MAN">Finance Manager</option>
+                                 <option value ="FI_MGR">Finance Manager</option>
                                  <option value ="IT_PROG">Software Developer</option>
-                                 <option value ="AD_VIP">Vice President</option>
+                                 <option value ="AD_VP">Vice President</option>
                              </select></td>
                      </tr>
                      <tr>
