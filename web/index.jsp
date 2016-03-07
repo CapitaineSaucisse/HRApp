@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to Spring Web MVC project</title>
+        <title>Welcome to Spring Web MVC2 project</title>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 
