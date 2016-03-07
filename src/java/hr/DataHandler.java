@@ -5,7 +5,7 @@
  */
 package hr;
 import java.sql.CallableStatement;
-
+import oracle.jdbc.OracleTypes;
 /**
  *
  * @author keith
@@ -102,7 +102,7 @@ public Employee findEmployeeById(int id) throws SQLException {
 
 Employee selectedEmp = new Employee();
 
-
+try{
 getDBConnection();
 stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 ResultSet.CONCUR_READ_ONLY);
@@ -122,7 +122,13 @@ selectedEmp.setHireDate(rset.getDate("hire_date"));
 selectedEmp.setSalary(new Double(rset.getDouble("salary")));
 selectedEmp.setJobId(rset.getString("job_id"));
 }
-return selectedEmp;
+return selectedEmp;}
+catch ( SQLException ex ){
+logException(ex);
+return null;}       
+finally {
+closeAll();
+}
 }
 
 
@@ -196,6 +202,9 @@ return "success";}
 catch ( SQLException ex ){
 logException( ex );
 return "failure";}
+finally {
+closeAll();
+}
 }
 
 
@@ -223,6 +232,9 @@ return "success";}
 catch ( SQLException ex ){
 logException( ex );
 return "failure";}
+finally {
+closeAll();
+}
 }
 
 public String deleteEmployeeById(int id) {
@@ -238,6 +250,9 @@ return "success";}
 catch ( SQLException ex ){
 logException( ex );
 return "failure";
+}
+finally {
+closeAll();
 }
 }
 
@@ -277,6 +292,40 @@ logException( ex );
 return "failure";
 }
 }
-
+public ResultSet getJobs() throws SQLException {
+try {
+getDBConnection();
+String jobquery = "begin ? := get_jobs; end;";
+CallableStatement callStmt = conn.prepareCall(jobquery);
+callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+callStmt.execute();
+rset = (ResultSet)callStmt.getObject(1);
+} catch ( SQLException ex ) {
+logException( ex );
+}
+return rset;
+}
+public void closeAll() {
+if ( rset != null ) {
+try { rset.close();
+}
+catch ( Exception ex ) {}
+rset = null;
+}
+if ( stmt != null ) {
+try {
+stmt.close();
+}
+catch ( Exception ex ) {}
+stmt = null;
+}
+if ( conn != null ) {
+try {
+conn.close();
+}
+catch ( Exception ex ) {}
+conn = null;
+}
+}
 }
 

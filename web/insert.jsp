@@ -13,12 +13,14 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <%@ page import="java.sql.ResultSet" %>
+        <jsp:useBean id="empsbean" scope="session" class="hr.DataHandler" />
+        <% ResultSet rset = empsbean.getJobs(); %>
         
         <h2 align="center">AnyCo Corporation: HR Application</h2>
         
         <h3 align="left">Insert Employee Record</h3>
-        <jsp:useBean id="empsbean" scope="session" class="hr.DataHandler" /> 
-        
+                 
           <form action="insert_action.jsp">
         <input type="radio" name="useSP" value="false" checked="checked" />
         Use only JDBC to insert a new record <p/>
@@ -53,14 +55,18 @@
                      <tr>
                          <td>Job</td>
                          <td><select name="job_id">
-                                 <option value ="SA_REP">Sales Representative</option>
+                        <%--     <option value ="SA_REP">Sales Representative</option>
                                  <option value ="HR_REP" >HR Representative</option>
                                  <option value ="PR_REP">PR Representative</option>
                                  <option value ="MK_MAN">Marketing Manager</option>
                                  <option value ="SA_MAN" >Sales Manager</option>
                                  <option value ="FI_MGR">Finance Manager</option>
                                  <option value ="IT_PROG">Software Developer</option>
-                                 <option value ="AD_VP">Vice President</option>
+                                 <option value ="AD_VP">Vice President</option> --%>
+                        <%    while (rset.next ()){
+                                out.println("<option value=" + rset.getString("job_id") + ">" +
+                                rset.getString("job_title") + "</option> ");
+                            } %>
                              </select></td>
                      </tr>
                      <tr>

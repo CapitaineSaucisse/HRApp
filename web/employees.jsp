@@ -25,11 +25,7 @@
             <input type="submit" value="Filter"> 
       </form>
     
-       
- 
-               
-                
-            <table border="1">
+             <table border="1">
                 <tr>
                     <th bgcolour = "cccccc" align="left">First Name</th>
                     <th bgcolour = "cccccc" align="left">Last Name</th>
@@ -64,6 +60,7 @@
                     rset.getInt(1) + "\">Delete</a></td>");
                 out.println("</tr>");
                    }
+                   empsbean.closeAll();
             }
                 catch (Exception e){
             out.println("An exception occurred: " + e.getMessage());
